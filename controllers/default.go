@@ -15,25 +15,31 @@ type MainController struct {
 	beego.Controller
 }
 
-type Breed struct {
-	Name string `json:"name"`
-	Id   string `json:"id"`
+type Image struct {
+	Url string `json:"url"`
 }
 
+func (c *MainController) Index() {
 
-type Category struct {
-	Name string `json:"name"`
-	Id int `json:"id"`
-}
+	type Breed struct {
+		Name string `json:"name"`
+		Id   string `json:"id"`
+	}
 
-func (c *MainController) Get() {
-	// c.Data["Website"] = "beego.me"
-	// c.Data["Email"] = "astaxie@gmail.com"
+
+	type Category struct {
+		Name string `json:"name"`
+		Id int `json:"id"`
+	}
+
 	c.TplName = "index.tpl"
 
 	/// codes for fetching all the breeds from CAT API
 	/// using the "net/http" package of Golang
 	url := "https://api.thecatapi.com/v1/breeds?attach_breed=0"
+
+
+	// https://api.thecatapi.com/v1/images/search?order=ASC&limit=18&category_ids=1&breed_id=abys&mime_types=gif,jpg,png
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -78,8 +84,25 @@ func (c *MainController) Get() {
 	c.Data["breeds"] = &a
 
 	c.Data["categories"] = &cat
+
 	//c.Data["json"]= &cat
 
 	//c.ServeJSON()
 
+}
+
+
+func (c *MainController) FetchData() {
+	order := c.GetString("order")
+	mime_types := c.GetString("type")
+	category := c.GetString("category")
+	breed := c.GetString("breed")
+	limit := c.GetString("limit")
+
+	url := "https://api.thecatapi.com/v1/images/search?order=" + order + "&limit=" + limit + "&category_ids=" + category + "&breed_id=" + breed + "&mime_types=" + mime_types
+
+	http.Get(url)
+
+	fmt.Println("yrs",order)
+	c.ServeJSON()
 }

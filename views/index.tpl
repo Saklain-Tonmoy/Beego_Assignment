@@ -6,6 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -44,13 +46,17 @@
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <label class="form-label">Order</label>
+                <select id="order" class="form-select">
+                  <option value="" selected>Random</option>
+                  <option value="DESC">Desc</option>
+                  <option value="ASC">Asc</option>
+                </select>
               </div>
               <div class="mb-3">
               <label class="form-label">Category</label>
-                <select class="form-select">
-                  <option selected>None</option>
+                <select id="category" class="form-select">
+                  <option value="" selected>None</option>
                   {{range $key, $val := .categories}}
                   <option value="{{$val.Id}}">{{$val.Name}}</option>
                   {{end}}
@@ -60,13 +66,17 @@
 
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <label class="form-label">Type</label>
+                <select id="type" class="form-select">
+                  <option value="" selected>All</option>
+                  <option value="png,jpg">Static</option>
+                  <option value="gif">Animated</option>
+                </select>
               </div>
               <div class="mb-3">
               <label class="form-label">Breed</label>
-                <select class="form-select">
-                  <option selected>Open this select menu</option>
+                <select id="breed" class="form-select">
+                  <option value="" selected>None</option>
                   {{range $key, $val := .breeds}}
                   <option value="{{$val.Id}}">{{$val.Name}}</option>
                   {{end}}
@@ -81,5 +91,36 @@
   </section>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script>
+    $(document).on('change', '#order', function() {
+      let order = $(this).val();
+      let type = $('#type').val();
+      let category = $('#category').val();
+      let breed = $('#breed').val();
+      console.log(order)
+      console.log(type)
+      console.log(category)
+      console.log(breed)
+
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8081/fetch-data',
+        data: {
+          "order": order,
+          "type": type,
+          "category": category,
+          "breed": breed,
+          "limit": 9
+        },
+        success: function(response) {
+          var data = response;
+          console.log(data)
+        },
+        error: function(error) {
+          console.log(error)
+        }
+      })
+    });
+  </script>
 </body>
 </html>
