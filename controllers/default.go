@@ -4,53 +4,82 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	//"log"
 	"net/http"
 
+	"github.com/beego/beego/v2/client/httplib"
 	beego "github.com/beego/beego/v2/server/web"
 )
 
 type MainController struct {
 	beego.Controller
 }
-type breed struct {
-	name string `json:"name"`
-	id   string `json:"id"`
+
+type Breed struct {
+	Name string `json:"name"`
+	Id   string `json:"id"`
+}
+
+
+type Category struct {
+	Name string `json:"name"`
+	Id int `json:"id"`
 }
 
 func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
+	// c.Data["Website"] = "beego.me"
+	// c.Data["Email"] = "astaxie@gmail.com"
 	c.TplName = "index.tpl"
 
 	/// codes for fetching all the breeds from CAT API
-	//url := "https://api.thecatapi.com/v1/breeds?attach_breed=0"
+	/// using the "net/http" package of Golang
+	url := "https://api.thecatapi.com/v1/breeds?attach_breed=0"
 
-	// req, _ := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest("GET", url, nil)
 
-	// req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5 ")
+	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5 ")
 
-	// res, _ := http.DefaultClient.Do(req)
+	res, _ := http.DefaultClient.Do(req)
+	
+	body, _ := ioutil.ReadAll(res.Body)
 
-	// //defer res.Body.Close()
-	// body, _ := ioutil.ReadAll(res.Body)
+	a := []Breed{}
 
-	// fmt.Println(res)
-	// fmt.Printf("Body text length %d \n",len(body))
+	json.Unmarshal(body, &a)
+	// fmt.Println(a[0].Name)
+	// for i:=0; i<len(a); i++ {
+	// 	fmt.Println(a[i].Id)
+	// 	fmt.Println(a[i].Name)
+	// }
+	fmt.Println(a)
+	// fmt.Println(len(a))
+
+
+
 
 	/// codes for fetching all the categories from CAT API
-	//responde, _ := http.Get(url)
+	/// using the "httplib" package of Beego
+	catReq := httplib.Get("https://api.thecatapi.com/v1/categories")
 
-	//  a := []breed{}
+	catReq.Header("Accept", "application/json")
+	catReq.Header("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
 
-	// jsonDataFromHttp, _ := ioutil.ReadAll(responde.Body)
-	// v := fmt.Sprintf("%s", jsonDataFromHttp)
+	data, _ := catReq.String()
+	fmt.Println(data)
 
-	
+	fmt.Printf("%T", data)
 
-	// fmt.Printf("%T", responde.Body)
-	
-	// data := json.NewDecoder(responde.Body)
-	//
-	// fmt.Println(a)
+	cat := []Category{}
+
+	json.Unmarshal([]byte(data), &cat)
+
+	fmt.Println(cat)
+
+	c.Data["breeds"] = &a
+
+	c.Data["categories"] = &cat
+	//c.Data["json"]= &cat
+
+	//c.ServeJSON()
 
 }
