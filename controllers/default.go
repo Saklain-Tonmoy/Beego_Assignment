@@ -93,16 +93,39 @@ func (c *MainController) Index() {
 
 
 func (c *MainController) FetchData() {
-	order := c.GetString("order")
-	mime_types := c.GetString("type")
-	category := c.GetString("category")
+
+	type Image struct {
+		Url string `json:"url"`
+	}
+
+	//order := c.GetString("order")
+	//mime_types := c.GetString("type")
+	//category := c.GetString("category")
 	breed := c.GetString("breed")
 	limit := c.GetString("limit")
 
-	url := "https://api.thecatapi.com/v1/images/search?order=" + order + "&limit=" + limit + "&category_ids=" + category + "&breed_id=" + breed + "&mime_types=" + mime_types
+	url := "https://api.thecatapi.com/v1/images/search?" + "limit=" + limit + "&breed_id=" + breed 
+	fmt.Println(url)
+	//http.Get(url)
 
-	http.Get(url)
+	req, _ := http.NewRequest("GET", url, nil)
 
-	fmt.Println("yrs",order)
+	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5 ")
+
+	res, _ := http.DefaultClient.Do(req)
+	
+	body, _ := ioutil.ReadAll(res.Body)
+
+	
+
+	a := []Image{}
+
+	json.Unmarshal(body, &a)
+	c.Data["images"] = &a
+	c.Data["json"]= &a
+	c.ServeJSON()
+	fmt.Println(a)
+
+	fmt.Println("yrs",breed)
 	c.ServeJSON()
 }
