@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	//"log"
 	"net/http"
 
 	"github.com/beego/beego/v2/client/httplib"
@@ -52,13 +51,8 @@ func (c *MainController) Index() {
 	a := []Breed{}
 
 	json.Unmarshal(body, &a)
-	// fmt.Println(a[0].Name)
-	// for i:=0; i<len(a); i++ {
-	// 	fmt.Println(a[i].Id)
-	// 	fmt.Println(a[i].Name)
-	// }
-	fmt.Println(a)
-	// fmt.Println(len(a))
+
+	//fmt.Println(a)
 
 
 
@@ -71,9 +65,9 @@ func (c *MainController) Index() {
 	catReq.Header("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
 
 	data, _ := catReq.String()
-	fmt.Println(data)
+	//fmt.Println(data)
 
-	fmt.Printf("%T", data)
+	//fmt.Printf("%T", data)
 
 	cat := []Category{}
 
@@ -89,6 +83,28 @@ func (c *MainController) Index() {
 
 	//c.ServeJSON()
 
+
+
+	/// codes for fetching initial images
+
+	imageReq := httplib.Get("https://api.thecatapi.com/v1/images/search?limit=9")
+
+	imageReq.Header("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
+
+	imagesData, _ := imageReq.String()
+
+	images := []Image{}
+
+	json.Unmarshal([]byte(imagesData), &images)
+
+	fmt.Println(images)
+
+	c.Data["images"] = &images
+
+	// c.Data["json"] = &images
+
+	// c.ServeJSON()
+
 }
 
 
@@ -98,15 +114,17 @@ func (c *MainController) FetchData() {
 		Url string `json:"url"`
 	}
 
-	//order := c.GetString("order")
-	//mime_types := c.GetString("type")
-	//category := c.GetString("category")
+	order := c.GetString("order")
+	mime_types := c.GetString("type")
+	category := c.GetString("category")
 	breed := c.GetString("breed")
 	limit := c.GetString("limit")
 
-	url := "https://api.thecatapi.com/v1/images/search?" + "limit=" + limit + "&breed_id=" + breed 
+	//url := "https://api.thecatapi.com/v1/images/search?" + "limit=" + limit + "&breed_id=" + breed 
+
+	url := "https://api.thecatapi.com/v1/images/search?order=" + order + "&limit=" + limit + "&category_ids=" + category + "&breed_id=" + breed + "&mime_types=" + mime_types
+
 	fmt.Println(url)
-	//http.Get(url)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -122,10 +140,8 @@ func (c *MainController) FetchData() {
 
 	json.Unmarshal(body, &a)
 	c.Data["images"] = &a
+
 	c.Data["json"]= &a
 	c.ServeJSON()
-	fmt.Println(a)
-
-	fmt.Println("yrs",breed)
-	c.ServeJSON()
+	//fmt.Println(a)
 }
