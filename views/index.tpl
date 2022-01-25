@@ -93,16 +93,12 @@
                 <div class="container mt-5">
                   <div id="image-container" class="row">
                     {{range $key, $val := .images}}
-                    <div class="col-md-4 mb-5 " style="position: relative">
+                    <div class="col-md-4 mb-5 ">
                       <img src="{{$val.Url}}"  width="250" height="250"></img>
                     </div>
                     {{end}}
                   </div>
                 </div>
-
-                <div id="ajax-image-container" class="container mt-5 d-none">
-                </div>
-
 
                 <div class="row mt-5">
                   <div class="col-md-4 mb-3">
@@ -165,7 +161,6 @@
           })
           console.log(html_data);
           $("#image-container").html(html_data);
-          $("#ajax-image-container").removeClass('d-none');
         },
         error: function(error) {
           console.log(error)
