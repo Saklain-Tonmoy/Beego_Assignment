@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{}, "Get:Index")
+    beego.Router("/", &controllers.MainController{}, "GET:Index")
 
-		beego.Router("/fetch-data", &controllers.MainController{}, "*:FetchData")
+		beego.Router("/fetch-data", &controllers.MainController{}, "GET:FetchData")
 }

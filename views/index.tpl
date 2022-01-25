@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-  <title>Beego</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<head>
+  <title>Beego Assignment</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
   <section>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color:#103076;">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color:rgb(210, 69, 21);">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="../static/img/header_logo.svg" /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-          aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#" style="padding:0"><img src="../static/img/w3logo-white-3.png" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link text-white" href="#">Pricing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link text-white" href="#">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Documentation</a>
+              <a class="nav-link text-white" href="#">Documentation</a>
             </li>
           </ul>
         </div>
@@ -37,16 +39,18 @@
     </nav>
   </section>
 
-  <div class="container-fluid">
+  <div class="container-fluid mt-5">
     <div class="row">
-      <div class="col-md-6">
-        Hello world
+      <div class="col-md-6 mt-3">
+        <h1 class="text-center mt-3">The Cat API - Cats as a Service.</h1>
+        <h5 class="text-center mt-3" style="color: rgb(210, 69, 21)">Because everyday is a Caturday.</h5>
+        <p class="text-center mt-3">A public service API all about Cats, free to use when making your fancy new App,
+          Website or Service.</p>
       </div>
       <div class="col-md-6">
         <section>
           <div class="container">
             <div class="card">
-              
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
@@ -59,7 +63,7 @@
                       </select>
                     </div>
                     <div class="mb-3">
-                    <label class="form-label">Category</label>
+                      <label class="form-label">Category</label>
                       <select id="category" class="form-select">
                         <option value="" selected>None</option>
                         {{range $key, $val := .categories}}
@@ -79,7 +83,7 @@
                       </select>
                     </div>
                     <div class="mb-3">
-                    <label class="form-label">Breed</label>
+                      <label class="form-label">Breed</label>
                       <select id="breed" class="form-select">
                         <option value="" selected>None</option>
                         {{range $key, $val := .breeds}}
@@ -88,20 +92,8 @@
                       </select>
                     </div>
                   </div>
-                </div>
 
-                <div class="container mt-5">
-                  <div id="image-container" class="row">
-                    {{range $key, $val := .images}}
-                    <div class="col-md-4 mb-5 ">
-                      <img src="{{$val.Url}}"  width="250" height="250"></img>
-                    </div>
-                    {{end}}
-                  </div>
-                </div>
-
-                <div class="row mt-5">
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-6">
                     <label class="form-label">Per Page</label>
                     <select id="limit" class="form-select">
                       <option value="9" selected>9</option>
@@ -109,12 +101,18 @@
                       <option value="80">80</option>
                     </select>
                   </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label"></label>
-                    <button class="btn btn-primary" style="width: 100%">More</button>
+                </div>
+
+                <div class="container mt-5">
+                  <div id="image-container" class="row">
+                    {{range $key, $val := .images}}
+                    <div class="col-md-4 mb-5 ">
+                      <img src="{{$val.Url}}" class="img-responsive rounded" width="230" height="200"></img>
+                    </div>
+                    {{end}}
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -122,10 +120,12 @@
       </div>
     </div>
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
   <script>
-    $(document).on('change', 'select', function() {
+    $(document).on('change', 'select', function () {
       let order = $('#order').val();
       let type = $('#type').val();
       let category = $('#category').val();
@@ -147,26 +147,27 @@
           "breed": breed,
           "limit": limit
         },
-        success: function(response) {
+        success: function (response) {
           let data = response;
           console.log(data);
           let html_data = "";
-          $.each(data, function(key, value) {
+          $.each(data, function (key, value) {
             console.log(value.url);
           })
-          $.each(data, function(key, value) {
+          $.each(data, function (key, value) {
             html_data += '<div class="col-md-4 mb-5 " style="position: relative">',
-            html_data += '<img src="' + value.url + '" width="250" height="250"></img>',
-            html_data += '</div>'
+              html_data += '<img src="' + value.url + '" width="250" height="250"></img>',
+              html_data += '</div>'
           })
           console.log(html_data);
           $("#image-container").html(html_data);
         },
-        error: function(error) {
+        error: function (error) {
           console.log(error)
         }
       })
     });
   </script>
 </body>
+
 </html>

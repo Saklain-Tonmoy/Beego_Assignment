@@ -42,7 +42,7 @@ func (c *MainController) Index() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5 ")
+	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
 
 	res, _ := http.DefaultClient.Do(req)
 	
@@ -109,10 +109,6 @@ func (c *MainController) Index() {
 
 
 func (c *MainController) FetchData() {
-
-	type Image struct {
-		Url string `json:"url"`
-	}
 
 	order := c.GetString("order")
 	mime_types := c.GetString("type")
