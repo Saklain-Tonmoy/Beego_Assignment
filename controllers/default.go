@@ -35,16 +35,13 @@ func (c *MainController) Index() {
 
 	/// codes for fetching all the breeds from CAT API
 	/// using the "net/http" package of Golang
-	url := "https://api.thecatapi.com/v1/breeds?attach_breed=0"
+	breedUrl := "https://api.thecatapi.com/v1/breeds?attach_breed=0"
 
+	breedReq, _ := http.NewRequest("GET", breedUrl, nil)
 
-	// https://api.thecatapi.com/v1/images/search?order=ASC&limit=18&category_ids=1&breed_id=abys&mime_types=gif,jpg,png
+	breedReq.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
 
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
-
-	res, _ := http.DefaultClient.Do(req)
+	res, _ := http.DefaultClient.Do(breedReq)
 	
 	body, _ := ioutil.ReadAll(res.Body)
 
@@ -52,22 +49,17 @@ func (c *MainController) Index() {
 
 	json.Unmarshal(body, &a)
 
-	//fmt.Println(a)
-
-
 
 
 	/// codes for fetching all the categories from CAT API
 	/// using the "httplib" package of Beego
-	catReq := httplib.Get("https://api.thecatapi.com/v1/categories")
+	categoryUrl := "https://api.thecatapi.com/v1/categories"
+	catReq := httplib.Get(categoryUrl)
 
 	catReq.Header("Accept", "application/json")
 	catReq.Header("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
 
 	data, _ := catReq.String()
-	//fmt.Println(data)
-
-	//fmt.Printf("%T", data)
 
 	cat := []Category{}
 
@@ -78,10 +70,6 @@ func (c *MainController) Index() {
 	c.Data["breeds"] = &a
 
 	c.Data["categories"] = &cat
-
-	//c.Data["json"]= &cat
-
-	//c.ServeJSON()
 
 
 
@@ -101,10 +89,6 @@ func (c *MainController) Index() {
 
 	c.Data["images"] = &images
 
-	// c.Data["json"] = &images
-
-	// c.ServeJSON()
-
 }
 
 
@@ -115,8 +99,6 @@ func (c *MainController) FetchData() {
 	category := c.GetString("category")
 	breed := c.GetString("breed")
 	limit := c.GetString("limit")
-
-	//url := "https://api.thecatapi.com/v1/images/search?" + "limit=" + limit + "&breed_id=" + breed 
 
 	url := "https://api.thecatapi.com/v1/images/search?order=" + order + "&limit=" + limit + "&category_ids=" + category + "&breed_id=" + breed + "&mime_types=" + mime_types
 
@@ -135,9 +117,9 @@ func (c *MainController) FetchData() {
 	a := []Image{}
 
 	json.Unmarshal(body, &a)
+	fmt.Println(a)
 	c.Data["images"] = &a
 
 	c.Data["json"]= &a
 	c.ServeJSON()
-	//fmt.Println(a)
 }

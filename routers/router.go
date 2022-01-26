@@ -9,4 +9,6 @@ func init() {
     beego.Router("/", &controllers.MainController{}, "GET:Index")
 
 		beego.Router("/fetch-data", &controllers.MainController{}, "GET:FetchData")
+
+		beego.Router("/test", &controllers.ConcurrentController{}, "GET:Index")
 }
