@@ -22,7 +22,7 @@
 - Install Golang
 - Install Beego
 
-## Install Golang
+## How to Install Golang
 
 ##### step 1
 
@@ -83,7 +83,9 @@ export GOBIN="/home/yourpcname/go/bin"
  go version
 ```
 
-##### step 7
+## How to Install Beego and Create Project
+
+##### step 1
 
 - Download and install beego By this command
 
@@ -92,15 +94,21 @@ go get -u github.com/beego/beego/v2
 go get -u github.com/beego/beego/v2
 ```
 
-##### step 8
+##### step 2
 
-- Create Beego project by this command
+- Create Beego MVC project by this command
 
 ```
-bee new project name
+bee new project_name
 ```
 
-##### step 9
+- Create Beego API project by this command
+
+```
+bee api project_name
+```
+
+##### step 3
 
 - Init module
 
@@ -117,7 +125,7 @@ git clone https://github.com/Saklain-Tonmoy/Beego_Assignment.git
 - Then, open the cloned folder using `VS Code` and run the following command
 
 ```
- bee run
+bee run
 ```
 - Finally, open your browser and enter the following URL to check it out
 ```
