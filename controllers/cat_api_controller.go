@@ -10,7 +10,7 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 )
 
-type ConcurrentController struct {
+type CatApiController struct {
 	beego.Controller
 }
 
@@ -34,7 +34,7 @@ func FetchApi(url string, ch chan string){
 
 }
 
-func (c *ConcurrentController) Index() {
+func (c *CatApiController) Index() {
 
 	type Breed struct {
 		Name string `json:"name"`
@@ -81,7 +81,7 @@ func (c *ConcurrentController) Index() {
 }
 
 
-func (c *ConcurrentController) FetchImages() {
+func (c *CatApiController) FetchImages() {
 	order := c.GetString("order")
 	mime_types := c.GetString("type")
 	category := c.GetString("category")
