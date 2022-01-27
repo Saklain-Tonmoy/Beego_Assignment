@@ -5,11 +5,17 @@
 
 ## Features
 
-- we can search Cats images
-- We can search Cats images by its Breed
-- We can search Cats images by its Category such as Boxes,hats,sunglasses etc
-- We can search Cats images by Image type such Jpg,Png,gif
-- We can change the number of images per page. By defult it shows 9 images
+- You can search Cats images
+- You can search Cats images by its Breed
+- You can search Cats images by its Category such as Boxes,hats,sunglasses etc
+- You can search Cats images by Image type such Jpg,Png,gif
+- You can change the number of images per page. By defult it shows 9 images
+
+## Languages used
+- Golang
+
+## Framework used
+- Beego
 
 ## How I completed this project
 
