@@ -1,4 +1,4 @@
-<h1 align="center">CATs API - Using Golang(Beego)</h1>
+<h1 align="center">CATs API - Golang(Beego)</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
