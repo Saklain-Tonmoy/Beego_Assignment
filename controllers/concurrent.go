@@ -14,7 +14,12 @@ type ConcurrentController struct {
 	beego.Controller
 }
 
-func FetchApi(url string) ([]map[string]interface{}, error) {
+type Image struct {
+	Url string `json:"url"`
+}
+
+func FetchApi(url string, ch chan string){
+
 	request, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
@@ -23,54 +28,84 @@ func FetchApi(url string) ([]map[string]interface{}, error) {
 
 	response, _ := http.DefaultClient.Do(request)
 
-	data, err := ioutil.ReadAll(response.Body)
+	data, _ := ioutil.ReadAll(response.Body)
 
-	//fmt.Println(data)
+	ch <- string(data)
 
-	var jsonMap []map[string]interface{}
-
-	fmt.Println(string(data))
-	// a, _ := json.Marshal(data)
-	json.Unmarshal(data, &jsonMap)
-	fmt.Println((&jsonMap))
-
-	// fmt.Println(string(jsonMap))
-
-	return jsonMap, err
 }
 
 func (c *ConcurrentController) Index() {
-	urls := []string{
-		"https://api.thecatapi.com/v1/breeds",
-		"https://api.thecatapi.com/v1/categories",
-		"https://api.thecatapi.com/v1/images/search?limit=9",
+
+	type Breed struct {
+		Name string `json:"name"`
+		Id string `json:"id"`
 	}
 
-	ch := make(chan interface{})
-
-	for _, url := range urls {
-		go func(url string) {
-			data, err := FetchApi(url)
-			if err != nil {
-				log.Fatalln("error getting comic", err)
-			}
-			ch <- data
-		}(url)
+	type Category struct {
+		Name string `json:"name"`
+		Id int `json:"id"`
 	}
 
-	var allApiData []interface{}
-	for i := 0; i < len(urls); i++ {
-		data := <-ch
-		fmt.Println(data)
-		allApiData = append(allApiData, data)
-		fmt.Println(allApiData)
-	}
+	breedChannel := make(chan string)
+	categoryChannel := make(chan string)
+	imageChannel := make(chan string)
+
+	go FetchApi("https://api.thecatapi.com/v1/breeds", breedChannel)
+
+	go FetchApi("https://api.thecatapi.com/v1/categories", categoryChannel)
+
+	go FetchApi("https://api.thecatapi.com/v1/images/search?limit=9", imageChannel)
+
+	breeds := []Breed{}
+	json.Unmarshal([]byte(<-breedChannel), &breeds)
+	//fmt.Println(breed)
+
+	categories := []Category{}
+	json.Unmarshal([]byte(<-categoryChannel), &categories)
+	//fmt.Println(category)
+
+	images := []Image{}
+	json.Unmarshal([]byte(<-imageChannel), &images)
+	//fmt.Println(image)
+
+	close(breedChannel)
+	close(categoryChannel)
+	close(imageChannel)
 
 	c.TplName = "index.tpl"
 
-	c.Data["allData"] = allApiData
+	c.Data["breeds"] = breeds
+	c.Data["categories"] = categories
+	c.Data["images"] = images
 
-	c.Data["json"] = allApiData
+}
 
+
+func (c *ConcurrentController) FetchImages() {
+	order := c.GetString("order")
+	mime_types := c.GetString("type")
+	category := c.GetString("category")
+	breed := c.GetString("breed")
+	limit := c.GetString("limit")
+	page := c.GetString("page")
+
+	url := "https://api.thecatapi.com/v1/images/search?order=" + order + "&limit=" + limit + "&category_ids=" + category + "&breed_id=" + breed + "&mime_types=" + mime_types + "&page=" + page
+
+	fmt.Println(url)
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
+
+	res, _ := http.DefaultClient.Do(req)
+	
+	body, _ := ioutil.ReadAll(res.Body)
+
+	images := []Image{}
+
+	json.Unmarshal(body, &images)
+	fmt.Println(images)
+
+	c.Data["json"]= &images
 	c.ServeJSON()
 }

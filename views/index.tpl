@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  
+
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
@@ -62,6 +62,14 @@
                   {{end}}
                 </select>
               </div>
+              <div class="mb-3">
+                <label class="form-label">Per Page</label>
+                <select id="limit" class="form-select">
+                  <option value="9" selected>9</option>
+                  <option value="18">18</option>
+                  <option value="80">80</option>
+                </select>
+              </div>
             </div>
 
             <div class="col-md-6">
@@ -82,15 +90,11 @@
                   {{end}}
                 </select>
               </div>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">Per Page</label>
-              <select id="limit" class="form-select">
-                <option value="9" selected>9</option>
-                <option value="18">18</option>
-                <option value="80">80</option>
-              </select>
+              <div class="mb-3">
+                <label class="form-label"></label>
+                <button id="more" type="button" class="btn btn-primary text-center"
+                  style="width: 100%; margin-top: 8px;"><i class="fas fa-redo"></i>&ensp;More</button>
+              </div>
             </div>
           </div>
 
@@ -153,6 +157,8 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <script>
+    let page = 0;
+
     $(document).on('change', 'select', function () {
       let order = $('#order').val();
       let type = $('#type').val();
@@ -162,13 +168,14 @@
 
       $.ajax({
         type: 'GET',
-        url: 'http://localhost:8081/fetch-data',
+        url: 'http://localhost:8080/fetch',
         data: {
           "order": order,
           "type": type,
           "category": category,
           "breed": breed,
-          "limit": limit
+          "limit": limit,
+          "page": 0
         },
         success: function (response) {
           let data = response;
@@ -179,6 +186,45 @@
               html_data += '<div style="background-image: url(' + value.url + '); background-size: cover; height: 200px; background-repeat: no-repeat; border-radius: 10px;"> ',
               html_data += '</div>',
               html_data += '</div>'
+          })
+          console.log(html_data);
+          $("#image-container").html(html_data);
+        },
+        error: function (error) {
+          console.log(error)
+        }
+      })
+    });
+
+    $(document).on('click', '#more', function () {
+      let order = $('#order').val();
+      let type = $('#type').val();
+      let category = $('#category').val();
+      let breed = $('#breed').val();
+      let limit = $('#limit').val();
+      page = page + 1;
+
+
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/fetch',
+        data: {
+          "order": order,
+          "type": type,
+          "category": category,
+          "breed": breed,
+          "limit": limit,
+          "page": page
+        },
+        success: function (response) {
+          let data = response;
+          console.log(data)
+          let html_data = "";
+          $.each(data, function (key, value) {
+            html_data += '<div class="col-md-4 mb-4">',
+            html_data += '<div style="background-image: url(' + value.url + '); background-size: cover; height: 200px; background-repeat: no-repeat; border-radius: 10px;"> ',
+            html_data += '</div>',
+            html_data += '</div>'
           })
           console.log(html_data);
           $("#image-container").html(html_data);
