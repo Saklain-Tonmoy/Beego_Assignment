@@ -103,7 +103,7 @@
               {{range $key, $val := .images}}
               <div class="col-md-4 mb-4">
                 <div
-                  style="background-image: url({{$val.Url}}); background-size: cover; height: 200px; background-repeat: no-repeat; border-radius: 10px; ">
+                  style="background-image: url({{$val.Url}}); background-size: cover; height: 300px; background-repeat: no-repeat; border-radius: 10px; ">
                 </div>
               </div>
               {{end}}
@@ -183,7 +183,7 @@
           let html_data = "";
           $.each(data, function (key, value) {
             html_data += '<div class="col-md-4 mb-4">',
-              html_data += '<div style="background-image: url(' + value.url + '); background-size: cover; height: 200px; background-repeat: no-repeat; border-radius: 10px;"> ',
+              html_data += '<div style="background-image: url(' + value.url + '); background-size: cover; height: 300px; background-repeat: no-repeat; border-radius: 10px;"> ',
               html_data += '</div>',
               html_data += '</div>'
           })
