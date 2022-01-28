@@ -68,9 +68,9 @@ func (c *CatApiController) Index() {
 	json.Unmarshal([]byte(<-imageChannel), &images)
 	//fmt.Println(image)
 
-	close(breedChannel)
-	close(categoryChannel)
-	close(imageChannel)
+	defer close(breedChannel)
+	defer close(categoryChannel)
+	defer close(imageChannel)
 
 	c.TplName = "index.tpl"
 
@@ -105,5 +105,6 @@ func (c *CatApiController) FetchImages() {
 
 	c.Data["json"]= &images
 
+	defer close(imagesChannel)
 	defer c.ServeJSON()
 }
