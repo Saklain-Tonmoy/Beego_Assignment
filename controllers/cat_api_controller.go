@@ -93,19 +93,17 @@ func (c *CatApiController) FetchImages() {
 
 	fmt.Println(url)
 
-	req, _ := http.NewRequest("GET", url, nil)
+	imagesChannel := make(chan string)
 
-	req.Header.Add("x-api-key", "6c73dbb1-628c-4102-b72a-cb021e2368c5")
-
-	res, _ := http.DefaultClient.Do(req)
-	
-	body, _ := ioutil.ReadAll(res.Body)
+	go FetchApi(url, imagesChannel)
 
 	images := []Image{}
 
-	json.Unmarshal(body, &images)
+	json.Unmarshal([]byte(<-imagesChannel), &images)
+
 	fmt.Println(images)
 
 	c.Data["json"]= &images
-	c.ServeJSON()
+
+	defer c.ServeJSON()
 }
