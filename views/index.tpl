@@ -135,7 +135,7 @@
               class="fab fa-linkedin-in"></i></a>
 
           <!-- Github -->
-          <a class="btn btn-outline-light btn-floating circular-button m-1" href="https://github.com/Saklain-Tonmoy"
+          <a class="btn btn-outline-light btn-floating circular-button m-1" href="https://github.com/Saklain-Tonmoy" target="_blank"
             role="button"><i class="fab fa-github"></i></a>
         </section>
         <!-- Section: Social media -->
@@ -145,7 +145,7 @@
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); font-weight: bold;">
         © 2022 Copyright:
-        <a class="text-white fw-bold" href="https://github.com/Saklain-Tonmoy" style="text-decoration: none;">Saklain
+        <a class="text-white fw-bold" href="https://github.com/Saklain-Tonmoy" target="_blank" style="text-decoration: none;">Saklain
           Tonmoy</a>
       </div>
       <!-- Copyright -->
