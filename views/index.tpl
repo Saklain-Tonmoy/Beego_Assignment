@@ -135,8 +135,8 @@
               class="fab fa-linkedin-in"></i></a>
 
           <!-- Github -->
-          <a class="btn btn-outline-light btn-floating circular-button m-1" href="#!" role="button"><i
-              class="fab fa-github"></i></a>
+          <a class="btn btn-outline-light btn-floating circular-button m-1" href="https://github.com/Saklain-Tonmoy"
+            role="button"><i class="fab fa-github"></i></a>
         </section>
         <!-- Section: Social media -->
       </div>
