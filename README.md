@@ -79,7 +79,7 @@ export GOPATH="/home/yourpcname/go/"
 export GOBIN="/home/yourpcname/go/bin"
 ```
 
-- After you’ve added this information to your profile, save and close the file. If you used nano, do so by pressing CTRL+X, then Y, and then ENTER.
+- After you’ve added this information to your profile, save and close the file. If you used nano, do so by pressing `CTRL+X`, then `Y`, and then `ENTER`.
 
 #### step 6
 
