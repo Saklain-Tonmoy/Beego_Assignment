@@ -40,21 +40,18 @@ cd ~
 
 #### step 2
 
-- Then use curl to retrieve the tarball.
+- Then use curl to retrieve/download the tarball.
 
 ```
 curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
 ```
+> - Note:: If `curl` is not installed in the system, please install it by the command below
+
+```
+sudo apt install curl
+```
 
 #### step 3
-
-- To verify the integrity of the file you downloaded, run the `sha256sum` command and pass it to the filename as an argument
-
-```
-sha256sum go1.16.7.linux-amd64.tar.gz
-```
-
-#### step 4
 
 - Next, use `tar` to extract the tarball. This command includes the `-C` flag which instructs tar to change to the given directory before performing any other operations
 
@@ -62,15 +59,15 @@ sha256sum go1.16.7.linux-amd64.tar.gz
 sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
 ```
 
-- In this step, you will set paths in your environment.
+#### step 5
+
+- In this step, you will set paths in your environment. First of all, type the command below and press `ENTER`
 
 ```
 sudo nano ~/.profile
 ```
 
-#### step 5
-
-- Then, add the following information to the end of your file:
+- Then, add the following informations to the end of your profile:
 
 ```
 export PATH=$PATH:/usr/local/go/bin
@@ -79,9 +76,10 @@ export GOPATH="/home/yourpcname/go/"
 export GOBIN="/home/yourpcname/go/bin"
 ```
 
-- After you’ve added this information to your profile, save and close the file. If you used nano, do so by pressing `CTRL+X`, then `Y`, and then `ENTER`.
+- After you’ve added this information to your profile, save and close the file by pressing `CTRL+X`, then `Y`, and then `ENTER`.
 
 #### step 6
+
 - After that type the follwing code and press `ENTER`
 ```
 source ~/.profile
@@ -97,11 +95,16 @@ source ~/.profile
 
 #### step 1
 
-- Download and install beego By this command
+- Download and install `Beego` and `Bee-Tool` by the following commands
 
 ```
 go get -u github.com/beego/beego/v2
 go get -u github.com/beego/bee/v2
+```
+> - Note: Sometimes while installing beego this error can occur `cgo: exec gcc: exec: "gcc": executable file not found in $PATH` This error occurs if the `gcc C compiler does not exist in the system.` That's why we need to install `C Compiler` by following command and then run the previous commands.
+
+```
+sudo apt-get install build-essential
 ```
 
 #### step 2
@@ -124,6 +127,13 @@ bee api project_name
 
 ```
 go mod tidy
+```
+
+#### step 4
+- Finally, run the project by the following command
+
+```
+bee run
 ```
 
 ## How to run this project
