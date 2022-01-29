@@ -82,8 +82,12 @@ export GOBIN="/home/yourpcname/go/bin"
 - After you’ve added this information to your profile, save and close the file. If you used nano, do so by pressing `CTRL+X`, then `Y`, and then `ENTER`.
 
 #### step 6
+- After that type the follwing code and press `ENTER`
+```
+source ~/.profile
+```
 
-- After, check if you can execute go commands by running go version:
+- Finally, check the go version using following command
 
 ```
  go version
