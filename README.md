@@ -47,9 +47,9 @@ curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
 ```
 > - Note:: If `curl` is not installed in the system, please install it by the command below
 
-> ```
-> sudo apt install curl
-> ```
+```
+sudo apt install curl
+```
 
 #### step 3
 
